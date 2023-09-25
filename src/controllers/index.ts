@@ -12,6 +12,11 @@ export const getAllPlans = catchAsync(async (req: Request, res: Response, next: 
     const { planId } = req.query;
     const url = planId ? `${process.env.BASE_URL}//public/v2/Plans/${planId}` : `${process.env.BASE_URL}//public/v2/Plans`;
     const request = new GetRequest(url);
-    const plans = await request.call();
-    res.json(plans);
+    let plans = await request.call();
+
+    if (planId) plans = { redirectUrl: `${process.env.PLANS_URL}/${plans.businessPlanID}`, ...plans };
+    console.log(plans.redirectUrl);
+
+    const redirectUrl =
+        res.json(plans);
 });
