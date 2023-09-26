@@ -10,13 +10,19 @@ export const testing = catchAsync(async (req: Request, res: Response, next: Next
 
 export const getAllPlans = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const { planId } = req.query;
-    const url = planId ? `${process.env.BASE_URL}//public/v2/Plans/${planId}` : `${process.env.BASE_URL}//public/v2/Plans`;
+    const url = planId ? `${process.env.BASE_URL}/public/v2/Plans/${planId}` : `${process.env.BASE_URL}/public/v2/Plans`;
     const request = new GetRequest(url);
     let plans = await request.call();
 
-    if (planId) plans = { redirectUrl: `${process.env.PLANS_URL}/${plans.businessPlanID}`, ...plans };
-    console.log(plans.redirectUrl);
+    if (planId) {
+        plans = { redirectUrl: `${process.env.PLANS_URL}/${plans.businessPlanID}`, ...plans };
+        console.log(plans.redirectUrl);
+    }
+    else {
+        plans.items.forEach((plan: any) => {
+            plan.redirectUrl = `${process.env.PLANS_URL}/${plan.businessPlanID}`;
+        });
+    }
 
-    const redirectUrl =
-        res.json(plans);
+    res.json(plans);
 });
