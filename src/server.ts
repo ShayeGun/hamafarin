@@ -6,7 +6,7 @@ import { checkEnvVar } from './utils/check-environment-variables';
 env.config({ path: `${__dirname}/../.env` });
 
 // environment variables check
-checkEnvVar('PORT', 'BASE_URL', 'PLANS_URL');
+checkEnvVar('PORT', 'BASE_URL', 'PLANS_URL', 'IMAGE_URL');
 
 // mongoose.connect(process.env.MONGODB_URL!,
 //     {

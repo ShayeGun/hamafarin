@@ -15,12 +15,17 @@ export const getAllPlans = catchAsync(async (req: Request, res: Response, next: 
     let plans = await request.call();
 
     if (planId) {
-        plans = { redirectUrl: `${process.env.PLANS_URL}/${plans.businessPlanID}`, ...plans };
-        console.log(plans.redirectUrl);
+        plans = {
+            imageUrl: `${process.env.IMAGE_URL}/${plans.imageNameInListPlans}`,
+            redirectUrl: `${process.env.PLANS_URL}/${plans.businessPlanID}`,
+            ...plans
+        };
+        // console.log(plans.redirectUrl);
     }
     else {
         plans.items.forEach((plan: any) => {
             plan.redirectUrl = `${process.env.PLANS_URL}/${plan.businessPlanID}`;
+            plan.imageUrl = `${process.env.IMAGE_URL}/${plans.imageNameInListPlans}`;
         });
     }
 
