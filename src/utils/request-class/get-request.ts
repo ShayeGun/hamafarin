@@ -14,7 +14,9 @@ class GetRequest extends ApiRequest<IGetRequest> {
 
     method: IGetRequest["method"] = Methods.get;
     url: IGetRequest['url'];
-    headers: IGetRequest['headers'] = {};
+    headers: IGetRequest['headers'] = {
+        'Authorization': process.env.TOKEN!
+    };
     private params?: IGetRequest['params'];
 
     constructor(url: IGetRequest['url'] = 'https://postman-echo.com/status/200', token?: IToken) {
